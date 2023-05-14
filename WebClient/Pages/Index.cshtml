@@ -1,0 +1,356 @@
+﻿@page
+@model WebClient.Pages.IndexModel
+@{
+    //ViewData["Title"] = "Home page";
+}
+<section>
+  <div class="row">
+    <div class="col-md-8 mb-4">
+      <div class="card mb-4">
+        <div class="card-header py-3">
+          <h5 class="mb-0">Credit Card details</h5>
+        </div>
+        <div class="card-body">
+          <form method="post">
+           
+            <!-- 2 column grid layout with text inputs for the first and last names -->
+           <h6 class="mb-3">Select Card Provider</h6>
+           
+           <div class="form-check">
+                @for (var i = 0; i < Model.CardName.Count(); i++)
+                {
+                     <input class="form-check-input" type="radio" asp-for="Card.CardType"  name="size" id="@Model.CardName[i].Text"
+                       value="@Model.CardName[i].Text" /> 
+                      @Model.CardName[i].Text
+                      <br>
+                 }
+            </div>
+
+
+            <div class="row mb-4">
+            </div>
+            <div class="row mb-2">
+              <div class="col-4 w-12">
+                <div class="form-outline">
+                   <input asp-for="Card.CardHolder" class="form-control" /> 
+                    <label asp-for="Card.CardHolder" class="form-label"></label>
+                  
+                 
+                </div>
+              </div>
+              <div class="col-4 w-12">
+                <div class="form-outline">
+                    <input asp-for="Card.CardNumber" class="form-control" id="txtCardNumber" /> 
+                    <label asp-for="Card.CardNumber" class="form-label"></label>
+                   
+                </div>
+              </div>
+            </div>
+
+            <div class="row mb-4">
+              <div class="col-2 w-12">
+                <div class="form-outline">
+                    <input asp-for="Card.ExpMonth" class="form-control" /> 
+                    <label asp-for="Card.ExpMonth" class="form-label"></label>
+                   
+                 
+                  
+                </div>
+              </div>
+               <div class="col-2">
+                <div class="form-outline">
+                    <input asp-for="Card.ExpYear" class="form-control" /> 
+                    <label asp-for="Card.ExpYear" class="form-label"></label>
+                   
+                 
+                 
+                </div>
+              </div>
+              <div class="col-2">
+                <div class="form-outline">
+                    <input asp-for="Card.CVV" class="form-control" /> 
+                    <label asp-for="Card.CVV" class="form-label"></label>
+                                     
+                 
+                </div>
+              </div>
+            </div>
+             <div class="row mb-4">
+              <div class="col-8 w-800">
+                <div class="form-outline">
+                    <table>
+                          <tr>
+                            <td>                                
+                                <div id="output" class="text-danger" ></div>
+                            </td>
+                           
+                        </tr>
+                        <tr>
+                            <td>
+                                 <span asp-validation-for="Card.CardHolder"  class="text-danger"></span>
+                                 
+                            </td>
+                           
+                        </tr>
+                        <tr>
+                              <td>
+                              <span asp-validation-for="Card.CardNumber" class="text-danger"></span>
+                               </td>
+                        </tr>
+                        <tr>
+                             <td>
+                            <span asp-validation-for="Card.CVV" class="text-danger"></span> 
+                             </td>
+                        </tr>
+                        <tr>
+                              <td>
+                             <span asp-validation-for="Card.ExpYear" class="text-danger"></span>
+                             </td>
+                        </tr>
+                        <tr>
+                             <td>
+                             <span asp-validation-for="Card.ExpMonth" class="text-danger"></span>
+                             </td>
+                        </tr>
+                    </table>                  
+                    
+                    </div>
+                     
+                    </div>
+              </div>
+            
+            <button class="btn btn-primary btn-lg btn-block"  id="btnSave" type="submit">
+              Continue to checkout
+            </button>
+           </form>
+          </>
+        </div>
+        
+      </div>
+      
+    </div>
+     
+   </div>
+
+</section>
+   <table class="table">
+            @if (Model.Cardlist == null)
+            {
+            <thead class="table-light te mb-3 card-header py-3">
+                <tr>
+                </tr>
+            </thead>
+            }
+            else
+            {
+             
+            <thead class="table-light te mb-3 card-header py-3">
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Card.CardNumber)
+                    </th>
+                     <th>
+                        @Html.DisplayNameFor(model => model.Card.CardHolder)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Card.CardType)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Card.ExpMonth)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Card.ExpYear)
+                    </th>
+                     <th>
+                        @Html.DisplayNameFor(model => model.Card.CVV)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Card.ModifiedDate)
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            
+     }
+
+                @if (Model.Cardlist == null)
+                {
+                     <tbody>
+              
+                            <tr class="table-active alert-danger">
+                                <td class="col-10">
+                                  <h6 class="mb-3 alert-danger">
+                                   No Credit Card Details have been added to our system - No availible Data!
+                                  </h6>
+                              </td>
+                            </tr>
+               
+                        </tbody>
+                }
+                else
+                {
+                    <tbody>
+                            @foreach (var item in Model.Cardlist)
+                            {
+
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.CardNumber)
+                                </td>
+                                 <td>
+                                    @Html.DisplayFor(modelItem => item.CardHolder)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.CardType)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.ExpMonth)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.ExpYear)
+                                </td>
+                                  <td>
+                                    @Html.DisplayFor(modelItem => item.CVV)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.ModifiedDate)
+                                </td>
+                            </tr>
+                            }
+            </tbody>
+    }
+    
+        </table>
+               
+
+   
+
+    <script>
+       
+            let x = document.getElementById("txtCardNumber");
+            x.addEventListener("focus", myFocusFunction, true);
+            x.addEventListener("blur", myBlurFunction, true);
+
+
+            function returnCreditCardTypes()
+            {
+                 x = '';
+                 var radioButtons = document.querySelectorAll('input[name="size"]');
+                 for (const radioButton of radioButtons) 
+                 {
+                     if (radioButton.checked)
+                     {
+                        selectedSize = radioButton.value;
+                        console.log(selectedSize);
+                        break;
+                     }
+                 }
+            }
+           
+           
+            let x = document.getElementById("txtCardNumber");
+            x.addEventListener("focus", myFocusFunction, true);
+            x.addEventListener("blur", myBlurFunction, true);
+
+            function myFocusFunction() 
+            {
+                document.getElementById("txtCardNumber").style.backgroundColor = "yellow";               
+                returnCreditCardTypes();
+                cardnumber(x);
+            }
+
+            function myBlurFunction() 
+            {
+              document.getElementById("txtCardNumber").style.backgroundColor = "";
+              returnCreditCardTypes();
+              cardnumber(x);
+            }
+
+              // Credit Card Testing ------- 
+                //console.log(checkLuhn('5555555555554444')); // MC, expected true
+                //console.log(checkLuhn('378282246310005')); // AmEx, expected true
+                //console.log(checkLuhn('4111 1111 1111 1111')); // Visa, expected true
+                //console.log(checkLuhn('4111111111111112')); // Visa, expected false
+            function cardnumber(inputtxt)
+            {
+
+                // Check American Express
+              var cardno = /^(?:3[47][0-9]{13})$/;
+              if(inputtxt.value.match(cardno))
+                    {
+                         console.log('valid')
+                  return true;
+                    }
+                  else
+                    {
+                   // alert("Not a valid Amercican Express credit card number!");
+                    console.log('invalid')
+                    return false;
+                    }
+
+                    // Check for Visa 
+                  var cardnoVisa = /^(?:4[0-9]{12}(?:[0-9]{3})?)$/;
+                  if(inputtxt.value.match(cardnoVisa))
+                    {
+                         console.log('invalid')
+                  return true;
+                    }
+                  else
+                    {
+                   // alert("Not a valid Visa credit card number!");
+                     console.log('invalid')
+                    return false;
+                    }
+
+
+                   // Check for Matercard number
+                      var cardnoMaster = /^(?:5[1-5][0-9]{14})$/;
+                      if(inputtxt.value.match(cardnoMaster))
+                            {
+                            // alert("Not a valid Mastercard number!");
+                             console.log('invalid')
+                          return true;
+                            }
+                          else
+                            {
+                            console.log('invalid')
+                            return false;
+                            }
+
+
+                            // Check for Discier card
+                           var cardnoDiscover = /^(?:6(?:011|5[0-9][0-9])[0-9]{12})$/;
+                          if(inputtxt.value.match(cardnoDiscover))
+                            {
+                          return true;
+                            }
+                          else
+                            {
+                            // alert("Not a valid Discover card number!");
+                            return false;
+                            }
+
+                            // Check for Dinners card
+                           var cardnoDinners = /^(?:3(?:0[0-5]|[68][0-9])[0-9]{11})$/;
+                          if(inputtxt.value.match(cardnoDinners))
+                            {
+                          return true;
+                            }
+                          else
+                            {
+                            // alert("Not a valid Dinners Club card number!");
+                            return false;
+                            }
+
+
+            }
+              
+
+
+
+
+
+           
+
+
+    </script>
