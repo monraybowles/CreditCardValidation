@@ -50,13 +50,13 @@
             <div class="row mb-4">
               <div class="col-2 w-12">
                 <div class="form-outline">
-                    <input asp-for="Card.ExpMonth" class="form-control" type="number"  /> 
+                    <input asp-for="Card.ExpMonth" class="form-control" maxlength="2" type="number"  /> 
                     <label asp-for="Card.ExpMonth" class="form-label"></label>
                 </div>
               </div>
                <div class="col-2">
                 <div class="form-outline">
-                    <input asp-for="Card.ExpYear" class="form-control" type="number" /> 
+                    <input asp-for="Card.ExpYear" class="form-control"  maxlength= "4" type="number" /> 
                     <label asp-for="Card.ExpYear" class="form-label"></label>
                    
                  
@@ -65,7 +65,7 @@
               </div>
               <div class="col-2">
                 <div class="form-outline">
-                    <input asp-for="Card.CVV" class="form-control" type="number"  /> 
+                    <input asp-for="Card.CVV" class="form-control" type="number" maxlength="3"  /> 
                     <label asp-for="Card.CVV" class="form-label"></label>
                                      
                  
@@ -116,7 +116,7 @@
                     </div>
               </div>
             
-            <button class="btn btn-primary btn-lg btn-block"  id="btnSave" type="submit">
+            <button class="btn btn-primary btn-lg btn-block" disabled  id="btnSave" type="submit">
               Continue to checkout
             </button>
            </form>
@@ -229,6 +229,7 @@
             x.addEventListener("focus", myFocusFunction, true);
             x.addEventListener("blur", myBlurFunction, true);
             var selectedCardType = '';
+            let btnSave = document.getElementById("btnSave");
 
             function returnCreditCardTypes()
             {
@@ -256,6 +257,7 @@
                 document.getElementById("txtCardNumber").style.backgroundColor = "yellow";               
                 returnCreditCardTypes();
                 cardnumber(x, selectedCardType);
+
             }
 
             function myBlurFunction() 
@@ -264,6 +266,7 @@
                document.getElementById("txtCardNumber").style.backgroundColor = "";
                returnCreditCardTypes();
                cardnumber(x, selectedCardType);
+
             }
 
               // Credit Card Testing ------- 
@@ -284,12 +287,15 @@
                      var cardno = /^(?:3[47][0-9]{13})$/;
                    if(inputtxt.value.match(cardno))
                     {
+
+                         btnSave.disabled = false;
                          console.log('valid')
                          return true;
                     }
                      else
                     {
                      // alert("Not a valid Amercican Express credit card number!");
+                        btnSave.disabled = true;
                          console.log('invalid')
                          return false;
                     }
@@ -302,12 +308,14 @@
                   var cardnoVisa = /^(?:4[0-9]{12}(?:[0-9]{3})?)$/;
                   if (inputtxt.value.match(cardnoVisa))
                     {
+                          btnSave.disabled = false;
                          console.log('valid')
                          return true;
                     }
                      else
                     {
                      // alert("Not a valid Visa credit card number!");
+                       btnSave.disabled = true;
                          console.log('invalid')
                          return false;
                     }
@@ -318,11 +326,13 @@
                       if(inputtxt.value.match(cardnoMaster))
                             {
                             // alert("Not a valid Mastercard number!");
+                              btnSave.disabled = false;
                                console.log('valid')
                                return true;
                             }
                           else
                             {
+                              btnSave.disabled = true;
                               console.log('invalid')
                               return false;
                       }
@@ -335,10 +345,12 @@
                           if(inputtxt.value.match(cardnoDiscover))
                             {
                              console.log('valid')
+                              btnSave.disabled = false;
                               return true;
                             }
                               else
                             {
+                             btnSave.disabled = true;
                             // alert("Not a valid Discover card number!");
                             return false;
                         }
@@ -358,10 +370,12 @@
                                   if(inputtxt.value.match(cardnoDinners))
                                     {
                                       console.log('valid')
+                                      btnSave.disabled = false;
                                       return true;
                                     }
                                   else
                                     {
+                                    btnSave.disabled = true;
                                     // alert("Not a valid Dinners Club card number!");
                                     return false;
                                     }

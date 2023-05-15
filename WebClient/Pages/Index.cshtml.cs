@@ -43,24 +43,38 @@ namespace WebClient.Pages
             Cardlist = Cardlist = _context.Card.ToList();
         }
 
-        public void OnPost()
+        public RedirectToPageResult OnPost()
         {
             // check form field and trigger validations
             if (!ModelState.IsValid)
             { 
                 // ----------
-                //return RedirectToPage();
+               return RedirectToPage();
             }
             else
             {
-                Card.CreditCardID = Guid.NewGuid();
-                Card.ModifiedDate = DateTime.Now;
-                _context.Card.Add(Card);
-                _context.SaveChanges();
-                //return RedirectToPage("./Index");
-            }
-        }
+                Cardlist = Cardlist = _context.Card.ToList();
 
+                //(IList<CreditCardValidationDto>)_context.Card.ToList().Where(x => x.CardNumber == Card.CardNumber);
+
+                if (Cardlist.Where(x => x.CardNumber == Card.CardNumber).ToList().Count == 0)
+                {                     
+
+                    Card.CreditCardID = Guid.NewGuid();
+                    Card.ModifiedDate = DateTime.Now;
+                    _context.Card.Add(Card);
+                    _context.SaveChanges();
+                  
+                }
+
+               
+            }
+            return RedirectToPage("./Index");
+        }
+        private RedirectToPageResult PageResult()
+        {
+            return PageResult();
+        }
 
     }
 }
