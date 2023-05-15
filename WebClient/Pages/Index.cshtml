@@ -25,7 +25,7 @@
                       <br>
                  }
             </div>
-
+             <input asp-for="Card.CardType" class="form-control" id="txtCardType"  type="hidden" /> 
 
             <div class="row mb-4">
             </div>
@@ -40,7 +40,7 @@
               </div>
               <div class="col-4 w-12">
                 <div class="form-outline">
-                    <input asp-for="Card.CardNumber" class="form-control" id="txtCardNumber" /> 
+                    <input asp-for="Card.CardNumber" class="form-control" id="txtCardNumber" type="number"  /> 
                     <label asp-for="Card.CardNumber" class="form-label"></label>
                    
                 </div>
@@ -50,16 +50,13 @@
             <div class="row mb-4">
               <div class="col-2 w-12">
                 <div class="form-outline">
-                    <input asp-for="Card.ExpMonth" class="form-control" /> 
+                    <input asp-for="Card.ExpMonth" class="form-control" type="number"  /> 
                     <label asp-for="Card.ExpMonth" class="form-label"></label>
-                   
-                 
-                  
                 </div>
               </div>
                <div class="col-2">
                 <div class="form-outline">
-                    <input asp-for="Card.ExpYear" class="form-control" /> 
+                    <input asp-for="Card.ExpYear" class="form-control" type="number" /> 
                     <label asp-for="Card.ExpYear" class="form-label"></label>
                    
                  
@@ -68,7 +65,7 @@
               </div>
               <div class="col-2">
                 <div class="form-outline">
-                    <input asp-for="Card.CVV" class="form-control" /> 
+                    <input asp-for="Card.CVV" class="form-control" type="number"  /> 
                     <label asp-for="Card.CVV" class="form-label"></label>
                                      
                  
@@ -226,44 +223,47 @@
    
 
     <script>
-       
+
+            let txtCardType = document.getElementById("txtCardType");
             let x = document.getElementById("txtCardNumber");
             x.addEventListener("focus", myFocusFunction, true);
             x.addEventListener("blur", myBlurFunction, true);
-
+            var selectedCardType = '';
 
             function returnCreditCardTypes()
             {
-                 x = '';
+                // x = '';
                  var radioButtons = document.querySelectorAll('input[name="size"]');
                  for (const radioButton of radioButtons) 
                  {
                      if (radioButton.checked)
                      {
-                        selectedSize = radioButton.value;
-                        console.log(selectedSize);
+                        selectedCardType = radioButton.value;   
+                        
+                         txtCardType.value = selectedCardType; 
+                       // console.log(selectedCardType);
                         break;
                      }
                  }
             }
            
+             
            
-            let x = document.getElementById("txtCardNumber");
-            x.addEventListener("focus", myFocusFunction, true);
-            x.addEventListener("blur", myBlurFunction, true);
 
             function myFocusFunction() 
             {
+               // console.log(selectedCardType);
                 document.getElementById("txtCardNumber").style.backgroundColor = "yellow";               
                 returnCreditCardTypes();
-                cardnumber(x);
+                cardnumber(x, selectedCardType);
             }
 
             function myBlurFunction() 
             {
-              document.getElementById("txtCardNumber").style.backgroundColor = "";
-              returnCreditCardTypes();
-              cardnumber(x);
+              // console.log(selectedCardType);
+               document.getElementById("txtCardNumber").style.backgroundColor = "";
+               returnCreditCardTypes();
+               cardnumber(x, selectedCardType);
             }
 
               // Credit Card Testing ------- 
@@ -271,76 +271,104 @@
                 //console.log(checkLuhn('378282246310005')); // AmEx, expected true
                 //console.log(checkLuhn('4111 1111 1111 1111')); // Visa, expected true
                 //console.log(checkLuhn('4111111111111112')); // Visa, expected false
-            function cardnumber(inputtxt)
+                    
+
+            function cardnumber(inputtxt, selectedCardType)
             {
 
+                console.log(selectedCardType);
                 // Check American Express
-              var cardno = /^(?:3[47][0-9]{13})$/;
-              if(inputtxt.value.match(cardno))
+                if (selectedCardType == 'AMEX') // Todo is to read card names , instead of hard coding !!!!!!!!!!!!!!!!
+                
+                {
+                     var cardno = /^(?:3[47][0-9]{13})$/;
+                   if(inputtxt.value.match(cardno))
                     {
                          console.log('valid')
-                  return true;
+                         return true;
                     }
-                  else
+                     else
                     {
-                   // alert("Not a valid Amercican Express credit card number!");
-                    console.log('invalid')
-                    return false;
-                    }
-
-                    // Check for Visa 
-                  var cardnoVisa = /^(?:4[0-9]{12}(?:[0-9]{3})?)$/;
-                  if(inputtxt.value.match(cardnoVisa))
-                    {
+                     // alert("Not a valid Amercican Express credit card number!");
                          console.log('invalid')
-                  return true;
+                         return false;
                     }
-                  else
+
+                }
+             
+                
+                // Check for Visa 
+                if (selectedCardType == 'VISA') {                         
+                  var cardnoVisa = /^(?:4[0-9]{12}(?:[0-9]{3})?)$/;
+                  if (inputtxt.value.match(cardnoVisa))
                     {
-                   // alert("Not a valid Visa credit card number!");
-                     console.log('invalid')
-                    return false;
+                         console.log('valid')
+                         return true;
                     }
-
-
-                   // Check for Matercard number
-                      var cardnoMaster = /^(?:5[1-5][0-9]{14})$/;
+                     else
+                    {
+                     // alert("Not a valid Visa credit card number!");
+                         console.log('invalid')
+                         return false;
+                    }
+                  }
+                    // Check for Mastercard number
+                  if (selectedCardType == 'MasterCard') {
+                       var cardnoMaster = /^(?:5[1-5][0-9]{14})$/;
                       if(inputtxt.value.match(cardnoMaster))
                             {
                             // alert("Not a valid Mastercard number!");
-                             console.log('invalid')
-                          return true;
+                               console.log('valid')
+                               return true;
                             }
                           else
                             {
-                            console.log('invalid')
-                            return false;
-                            }
+                              console.log('invalid')
+                              return false;
+                      }
 
+                  }
 
-                            // Check for Discier card
-                           var cardnoDiscover = /^(?:6(?:011|5[0-9][0-9])[0-9]{12})$/;
+                  if (selectedCardType == 'Discover') {
+
+                       var cardnoDiscover = /^(?:6(?:011|5[0-9][0-9])[0-9]{12})$/;
                           if(inputtxt.value.match(cardnoDiscover))
                             {
-                          return true;
+                             console.log('valid')
+                              return true;
                             }
-                          else
+                              else
                             {
                             // alert("Not a valid Discover card number!");
                             return false;
+                        }
+
+                  }
+                 
+
+
+                   // Check for Mastercard number
+                     
+
+
+                            // Check for Discover card
+                            if (selectedCardType == 'Dinners') {
+                                  // Check for Dinners card
+                                   var cardnoDinners = /^(?:3(?:0[0-5]|[68][0-9])[0-9]{11})$/;
+                                  if(inputtxt.value.match(cardnoDinners))
+                                    {
+                                      console.log('valid')
+                                      return true;
+                                    }
+                                  else
+                                    {
+                                    // alert("Not a valid Dinners Club card number!");
+                                    return false;
+                                    }
                             }
 
-                            // Check for Dinners card
-                           var cardnoDinners = /^(?:3(?:0[0-5]|[68][0-9])[0-9]{11})$/;
-                          if(inputtxt.value.match(cardnoDinners))
-                            {
-                          return true;
-                            }
-                          else
-                            {
-                            // alert("Not a valid Dinners Club card number!");
-                            return false;
-                            }
+
+                          
 
 
             }

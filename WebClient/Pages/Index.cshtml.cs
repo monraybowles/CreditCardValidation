@@ -17,8 +17,9 @@ namespace WebClient.Pages
     public class IndexModel : PageModel
     {
 
-        private readonly ApplicationDbContext _context;
-        private readonly ICardService _cardResolver;
+
+        public readonly ApplicationDbContext _context;
+        public readonly ICardService _cardResolver;
         public IndexModel(ApplicationDbContext context, ICardService cardResolver)
         {
 
@@ -54,7 +55,9 @@ namespace WebClient.Pages
             }
             else
             {
-               
+                Card.CreditCardID = Guid.NewGuid();
+                Card.ModifiedDate = DateTime.Now;
+                _context.Card.Add(Card);
                 _context.SaveChanges();
                 //return RedirectToPage("./Index");
             }
