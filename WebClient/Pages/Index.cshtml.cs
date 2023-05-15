@@ -55,9 +55,9 @@ namespace WebClient.Pages
             {
                 Cardlist = Cardlist = _context.Card.ToList();
 
-                //(IList<CreditCardValidationDto>)_context.Card.ToList().Where(x => x.CardNumber == Card.CardNumber);
+                //Check for duplicate entires before inserting data 
 
-                if (Cardlist.Where(x => x.CardNumber == Card.CardNumber).ToList().Count == 0)
+                if (Cardlist.Where(x => x.CardNumber == Card.CardNumber && x.CardHolder == Card.CardHolder).ToList().Count == 0)
                 {                     
 
                     Card.CreditCardID = Guid.NewGuid();
