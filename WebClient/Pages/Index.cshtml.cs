@@ -16,8 +16,6 @@ namespace WebClient.Pages
 {
     public class IndexModel : PageModel
     {
-
-
         public readonly ApplicationDbContext _context;
         public readonly ICardService _cardResolver;
         public IndexModel(ApplicationDbContext context, ICardService cardResolver)
@@ -50,7 +48,7 @@ namespace WebClient.Pages
             // check form field and trigger validations
             if (!ModelState.IsValid)
             { 
-               // ----------
+                // ----------
                 //return RedirectToPage();
             }
             else
