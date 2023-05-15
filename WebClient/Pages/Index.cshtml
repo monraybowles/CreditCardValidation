@@ -50,13 +50,15 @@
             <div class="row mb-4">
               <div class="col-2 w-12">
                 <div class="form-outline">
-                    <input asp-for="Card.ExpMonth" class="form-control" maxlength="2" type="number"  /> 
+                    @Html.TextBoxFor(m=> m.Card.ExpMonth,  new { maxlength="2", @class = "form-control" })
+                   @* <input asp-for="Card.ExpMonth" class="form-control" maxlength="2" size="2" type="number"  /> *@
                     <label asp-for="Card.ExpMonth" class="form-label"></label>
                 </div>
               </div>
                <div class="col-2">
                 <div class="form-outline">
-                    <input asp-for="Card.ExpYear" class="form-control"  maxlength= "4" type="number" /> 
+                      @Html.TextBoxFor(m=> m.Card.ExpYear,  new { maxlength="4", @class = "form-control" })
+                  @*  <input asp-for="Card.ExpYear" class="form-control" maxlength="4" size="4" type="number" /> *@
                     <label asp-for="Card.ExpYear" class="form-label"></label>
                    
                  
@@ -65,7 +67,8 @@
               </div>
               <div class="col-2">
                 <div class="form-outline">
-                    <input asp-for="Card.CVV" class="form-control" type="number" maxlength="3"  /> 
+                     @Html.TextBoxFor(m=> m.Card.CVV,  new { maxlength="3", @class = "form-control" })
+                  @*  <input asp-for="Card.CVV" class="form-control" type="number" maxlength="3" size="3"  /> *@
                     <label asp-for="Card.CVV" class="form-label"></label>
                                      
                  
@@ -228,9 +231,11 @@
             let x = document.getElementById("txtCardNumber");
             x.addEventListener("focus", myFocusFunction, true);
             x.addEventListener("blur", myBlurFunction, true);
+          
+
             var selectedCardType = '';
             let btnSave = document.getElementById("btnSave");
-
+           
             function returnCreditCardTypes()
             {
                 // x = '';
@@ -248,13 +253,13 @@
                  }
             }
            
-             
+           
            
 
             function myFocusFunction() 
             {
                // console.log(selectedCardType);
-                document.getElementById("txtCardNumber").style.backgroundColor = "yellow";               
+                document.getElementById("txtCardNumber").style.backgroundColor = "Yellow";               
                 returnCreditCardTypes();
                 cardnumber(x, selectedCardType);
 
