@@ -41,7 +41,7 @@ namespace WebClient.Pages
         public CreditCardValidationDto Card { get; set; }
         public void OnGet()
         {
-            //-- loads the list and postal codes
+            //-- loads the list and CREDIT CARD TYPES
             Cardlist = Cardlist = _context.Card.ToList();
         }
 
