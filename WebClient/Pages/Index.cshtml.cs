@@ -58,7 +58,8 @@ namespace WebClient.Pages
                 //Check for duplicate entires before inserting data 
 
                 if (Cardlist.Where(x => x.CardNumber == Card.CardNumber && x.CardHolder == Card.CardHolder).ToList().Count == 0)
-                {                     
+                {
+                    //  todo  - encryption and decryption on card numbers
 
                     Card.CreditCardID = Guid.NewGuid();
                     Card.ModifiedDate = DateTime.Now;

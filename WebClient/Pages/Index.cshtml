@@ -50,14 +50,14 @@
             <div class="row mb-4">
               <div class="col-2 w-12">
                 <div class="form-outline">
-                    @Html.TextBoxFor(m=> m.Card.ExpMonth,  new { maxlength="2", @class = "form-control" })
+                    @Html.TextBoxFor(m=> m.Card.ExpMonth,   new { maxlength="2", @class = "form-control", id="txtMonth" })
                    @* <input asp-for="Card.ExpMonth" class="form-control" maxlength="2" size="2" type="number"  /> *@
                     <label asp-for="Card.ExpMonth" class="form-label"></label>
                 </div>
               </div>
                <div class="col-2">
                 <div class="form-outline">
-                      @Html.TextBoxFor(m=> m.Card.ExpYear,  new { maxlength="4", @class = "form-control" })
+                      @Html.TextBoxFor(m=> m.Card.ExpYear,  new { maxlength="4", @class = "form-control", id="txtYear"  })
                   @*  <input asp-for="Card.ExpYear" class="form-control" maxlength="4" size="4" type="number" /> *@
                     <label asp-for="Card.ExpYear" class="form-label"></label>
                    
@@ -67,7 +67,7 @@
               </div>
               <div class="col-2">
                 <div class="form-outline">
-                     @Html.TextBoxFor(m=> m.Card.CVV,  new { maxlength="3", @class = "form-control" })
+                     @Html.TextBoxFor(m=> m.Card.CVV,  new { maxlength="3", @class = "form-control", id="txtCVV"  })
                   @*  <input asp-for="Card.CVV" class="form-control" type="number" maxlength="3" size="3"  /> *@
                     <label asp-for="Card.CVV" class="form-label"></label>
                                      
@@ -229,9 +229,22 @@
 
             let txtCardType = document.getElementById("txtCardType");
             let x = document.getElementById("txtCardNumber");
+
+            let txtMonth = document.getElementById("txtMonth");
+            let txtYear = document.getElementById("txtYear");
+            let txtCVV = document.getElementById("txtCVV");
+
             x.addEventListener("focus", myFocusFunction, true);
             x.addEventListener("blur", myBlurFunction, true);
           
+            txtMonth.addEventListener("focus", myFocusFunction, true);
+            txtMonth.addEventListener("blur", myBlurFunction, true);
+
+            txtYear.addEventListener("focus", myFocusFunction, true);
+            txtYear.addEventListener("blur", myBlurFunction, true);
+
+            txtCVV.addEventListener("focus", myFocusFunction, true);
+            txtCVV.addEventListener("blur", myBlurFunction, true);
 
             var selectedCardType = '';
             let btnSave = document.getElementById("btnSave");
@@ -252,25 +265,45 @@
                      }
                  }
             }
+           function checkEmptyValues()
+           {
+               if ((txtMonth.value == '') || (txtYear.value == '') || (txtCVV.value == '') || (x.value == ''))
+                {
+                     btnSave.disabled = true;
+                }
+                else 
+                {
+                     btnSave.disabled = false;
+                }
            
-           
-           
-
+            }
             function myFocusFunction() 
             {
                // console.log(selectedCardType);
-                document.getElementById("txtCardNumber").style.backgroundColor = "Yellow";               
-                returnCreditCardTypes();
-                cardnumber(x, selectedCardType);
+                checkEmptyValues();
+                document.getElementById("txtCardNumber").style.backgroundColor = "Yellow";    
+                txtCVV.style.backgroundColor = "Yellow";   
+                txtYear.style.backgroundColor = "Yellow";   
+                txtMonth.style.backgroundColor = "Yellow";   
 
+                returnCreditCardTypes();
+               
+
+                cardnumber(x, selectedCardType);
             }
 
             function myBlurFunction() 
             {
               // console.log(selectedCardType);
+               checkEmptyValues();
                document.getElementById("txtCardNumber").style.backgroundColor = "";
+                txtCVV.style.backgroundColor = "";   
+                txtYear.style.backgroundColor = "";   
+                txtMonth.style.backgroundColor = "";   
                returnCreditCardTypes();
+               
                cardnumber(x, selectedCardType);
+               
 
             }
 
@@ -293,7 +326,7 @@
                    if(inputtxt.value.match(cardno))
                     {
 
-                         btnSave.disabled = false;
+                       //  btnSave.disabled = false;
                          console.log('valid')
                          return true;
                     }
@@ -301,6 +334,7 @@
                     {
                      // alert("Not a valid Amercican Express credit card number!");
                         btnSave.disabled = true;
+                         document.getElementById("txtCardNumber").style.backgroundColor = "Red";    
                          console.log('invalid')
                          return false;
                     }
@@ -313,14 +347,15 @@
                   var cardnoVisa = /^(?:4[0-9]{12}(?:[0-9]{3})?)$/;
                   if (inputtxt.value.match(cardnoVisa))
                     {
-                          btnSave.disabled = false;
+                         // btnSave.disabled = false;
                          console.log('valid')
                          return true;
                     }
                      else
                     {
                      // alert("Not a valid Visa credit card number!");
-                       btnSave.disabled = true;
+                      document.getElementById("txtCardNumber").style.backgroundColor = "Red";    
+                        btnSave.disabled = true;
                          console.log('invalid')
                          return false;
                     }
@@ -331,7 +366,7 @@
                       if(inputtxt.value.match(cardnoMaster))
                             {
                             // alert("Not a valid Mastercard number!");
-                              btnSave.disabled = false;
+                            //  btnSave.disabled = false;
                                console.log('valid')
                                return true;
                             }
@@ -350,11 +385,12 @@
                           if(inputtxt.value.match(cardnoDiscover))
                             {
                              console.log('valid')
-                              btnSave.disabled = false;
+                             // btnSave.disabled = false;
                               return true;
                             }
                               else
                             {
+                             document.getElementById("txtCardNumber").style.backgroundColor = "Red";    
                              btnSave.disabled = true;
                             // alert("Not a valid Discover card number!");
                             return false;
@@ -375,11 +411,12 @@
                                   if(inputtxt.value.match(cardnoDinners))
                                     {
                                       console.log('valid')
-                                      btnSave.disabled = false;
+                                      //btnSave.disabled = false;
                                       return true;
                                     }
                                   else
                                     {
+                                    document.getElementById("txtCardNumber").style.backgroundColor = "Red";    
                                     btnSave.disabled = true;
                                     // alert("Not a valid Dinners Club card number!");
                                     return false;
