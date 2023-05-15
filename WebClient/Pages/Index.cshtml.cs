@@ -46,6 +46,8 @@ namespace WebClient.Pages
         public RedirectToPageResult OnPost()
         {
             // check form field and trigger validations
+
+            // TODO ADD A NICE MESSAGE FOR DUPLICATE ENTIRES FOUND -- encryption and decryption on card numbers
             if (!ModelState.IsValid)
             { 
                 // ----------
